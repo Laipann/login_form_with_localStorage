@@ -6,6 +6,7 @@ const {body, validationResult, check} = require('express-validator')
 const flash = require('connect-flash')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
+const bcrypt             = require('bcrypt')
 
 
 require('./utils/db')
@@ -41,7 +42,8 @@ app.get('/login', (req,res) => {
     res.render('login', {title: 'Login', layout: 'layout/main-layout'} )
 })
 
-app.get('/berhasil', (req,res) => {
+app.get('/login/:nama', async (req,res) => {
+    const data = await login.findOne({nama : req.params.nama})
     res.render('berhasil', {title : 'berhasil' , layout : 'layout/main-layout'})
 })
 
@@ -52,7 +54,12 @@ app.get('/register', (req,res) => {
 
 app.post('/register', async (req,res) => {
         try {
-            await login.insertMany([req.body])
+            const hash = await bcrypt.hash(req.body.password, 10)
+            const newUser = {
+                nama : req.body.nama,
+                password : hash,
+            }
+            await login.insertMany([newUser])
             req.flash('msg', 'data berhasil ditambhakan')
             res.redirect('/login')
             console.log(req.body)
@@ -62,26 +69,31 @@ app.post('/register', async (req,res) => {
     }
 )
 
+
 app.post('/login',
     [body('nama').custom(async(value, {req}) => {
         const user = await login.findOne({nama : value})
-    
         if(!user){
-            throw new Error('username tidak sesuai')
+            throw new Error('nama tidak ada')
         }
-        if(!user.passwod){
+
+        const isMatch = await bcrypt.compare(req.body.password, user.password)
+        if(!isMatch){
             throw new Error('password tidak sesuai')
         }
         return true
-    })], (req,res) => {
+ 
+    })],
+
+    (req,res) => {
         const errors = validationResult(req)
-
-        if(!errors.isEmpty){
+        if(!errors.isEmpty()){
             req.flash('data tidak ada')
+            res.redirect('login')
+            console.log(errors.array())
+        } else {
+            res.redirect(`/login/${req.body.nama}`)
         }
-
-        res.redirect('berhasil')
-
     }
 )
 
