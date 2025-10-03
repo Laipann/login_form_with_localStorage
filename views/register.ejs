@@ -1,40 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    
-    <p id="iniRegister"></p>
 
-    <video autoplay muted loop src="hujan2.mp4"></video>
 
-    <div class="containers">
+<div class="container">
+    <div class="raw">
+        
+        <!-- layar kiri -->
+    <div class="screen">
+        <p>Capturing Every Moments</p>
+        <img src="screen2.jpg" alt="">
+    </div>
+
+    <!-- layar kanan -->
         <form method="POST" action="/register">
-        <div class="form-input">
-            <h1>Register</h1>
-
-            <div class="register-container">
-                <h3>Username</h3>
-                <input type="text" placeholder="Nama" id="username" name="nama">
-                <p id="emptyUser"></p>
+            <div class="form-input">
+                <h1>Register Form</h1>
+                <div class="login-container">
+                    <input type="text" placeholder="Nama" id="username" name="nama">
+                    <p id="emptyUser"></p>
+                </div>
+                <div class="login-container">
+                    <input type="password" placeholder="password" id="password" name="password">
+                    <p id="emptyPassword"></p>
+                </div>
+                <button id="registerBtn" type="submit">Register</button>
             </div>
-            
-            <div class="register-container">
-                <h3>Password</h3>
-                <input type="password" placeholder="password" id="password" name="password">
-                <p id="emptyPassword"></p>
-            </div>
-            <button id="registerBtn" type="submit">Register</button>
+        </form> 
 
-        </div>
-    </div></form>
+    </div>
+</div>
 
 
-    <script src="script.js"></script>
 
-</body>
-</html>
+
+
+
+
+ 
+ 
+
+ 
+
+

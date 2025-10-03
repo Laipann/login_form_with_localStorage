@@ -5,7 +5,10 @@
 }
 
 :root{
-    --transparant-color: rgb(255, 255, 255,0.1);
+    --background-color : #2C2638;
+    --register-bg:#C3D9C7;
+    --register-form: #C3C9B3;
+    --form-color: #3C364C;
     --text-color: #fff;
     --btn-color: #0625D0;
     --h1-color: rgb(231, 220, 220);
@@ -18,7 +21,7 @@ body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-/* LOGIN */
+/* LOGIN & register */
 
 video{
     width: 100%;
@@ -35,24 +38,58 @@ video{
     flex-direction: column;
     position: absolute;
     top: 0;
+}
 
+.container .raw{
+    display: flex;
+    width: 100%;
+}
+
+.container .screen{
+    height: 200px;
+    width: 200px;
+    width: 50%;
+    height: 100vh;
+}
+
+.container .screen img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.container .screen p{
+    position: absolute;
+    color: var(--text-color);
+    bottom: 0;
+    font-size: 2rem;
+    
 }
 
 .container .form-input{
-    background-color: var(--transparant-color);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(10px);
-    min-width: 600px;
-    flex-direction: column;
+    width: 60%;
     display: flex;
-    width: 600px;
+    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    border-radius: 5px;
 }
+
+.container form{
+    background-color: var(--background-color);
+    flex-direction: column;
+    width: 50%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
 
 .container h1{
     color: var(--h1-color);
 }
+
 
 .container .form-input input{
     width: 70%;
@@ -60,7 +97,7 @@ video{
     border: none;
     border-bottom: 2px solid #000;
     outline: none;
-    background-color: rgb(000, 000, 000, 0.2);
+    background-color: var(--form-color);
     border-radius: 7px;
     padding: 20px;
     color: var(--text-color);
@@ -80,7 +117,7 @@ video{
 }
 
 .container .login-container{
-    width: 70%;
+    width: 100%;
     margin: 10px;
 }
 
@@ -103,71 +140,29 @@ video{
     font-weight: bold;
 }
 
-/* REGISTER */
-.containers {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    position: absolute;
-    top: 0;
-}
 
-.containers h1{
-    color: var(--h1-color);
-}
+@media (max-width:600px){
+    
+    .container .raw{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow-y: scroll;
+    }
 
-.containers .form-input{
-    max-width: 600px;
-    width: 600px;
-    background-color: var(--transparant-color);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 10px;
-}
+    .container .screen{
+        height: 40%;
+    }
 
-.containers .form-input input{
-    width: 100%;
-    border: none;
-    border-bottom: 3px solid #000;
-    height: 30px;
-    padding: 20px;
-    outline: none;
-    background-color: rgb(000, 000, 000,0.3);
-    border-radius: 10px;
-    color: var(--text-color);
-    font-weight: bold;
+
+    .container .screen, .container form{
+        width: 100%;
+    }
+
+    .container .screen p{
+        display: none;
+    }
+
 }
 
 
-.containers button{
-    width: 100px;
-    height: 30px;
-    border-radius: 10px;
-    border: none;
-    background-color: var(--btn-color);
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    margin: 10px;
-}
-
-.containers .register-container{
-    width: 70%;
-    margin: 10px;
-}
-
-.containers .register-container p{
-    color: red;
-    display: none;
-}
-
-
-.video{
-    position: fixed;
-}
