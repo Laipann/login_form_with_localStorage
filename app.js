@@ -33,19 +33,23 @@ app.use(flash())
 
 
 
+function authMiddleware(req,res, next) {
+    if(!req.session.user){
+        return res.redirect('/login')
+    }
+    next()
+}
+
+
 
 app.get('/', (req,res) => {
-    res.render('login', {title: 'Login', layout: 'layout/main-layout'} )
+    res.render('main', {title: 'Login', layout: 'layout/main-layout'} )
 })
 
 app.get('/login', (req,res) => {
     res.render('login', {title: 'Login', layout: 'layout/main-layout'} )
 })
 
-app.get('/login/:nama', async (req,res) => {
-    const data = await login.findOne({nama : req.params.nama})
-    res.render('berhasil', {title : 'berhasil' , layout : 'layout/main-layout'})
-})
 
 app.get('/register', (req,res) => {
     res.render('register', {title: 'register', layout : 'layout/main-layout'})
@@ -58,11 +62,11 @@ app.post('/register', async (req,res) => {
             const newUser = {
                 nama : req.body.nama,
                 password : hash,
+                role : 'user'
             }
             await login.insertMany([newUser])
             req.flash('msg', 'data berhasil ditambhakan')
             res.redirect('/login')
-            console.log(req.body)
         }catch(err){
             console.log(err)
         }
@@ -81,7 +85,9 @@ app.post('/login',
         if(!isMatch){
             throw new Error('password tidak sesuai')
         }
-        return true
+        req.session.user = {
+            nama: user.nama
+        }
  
     })],
 
@@ -99,14 +105,23 @@ app.post('/login',
 
 
 
+app.get('/login/:nama', authMiddleware,async (req,res) => {
+    const data = await login.findOne({nama : req.params.nama})
+
+
+    if(!req.session.user && !data && req.session.user !== req.params.nama){
+        return res.redirect('/login')
+    } 
+    res.render('berhasil', {title : 'berhasil' , layout : 'layout/main-layout'})
+    
+})
+
+
 
 
 app.listen(port, ()=> {
     console.log(`listening on port ${port}`)
 })
-
-
-
 
 
 

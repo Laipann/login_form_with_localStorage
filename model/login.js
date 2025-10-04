@@ -7,6 +7,9 @@ const login = mongoose.model('login',{
     password : {
         type : String,
         required : true
+    },
+    role : {
+        type : String
     }
 })
 
